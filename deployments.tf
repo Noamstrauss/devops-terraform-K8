@@ -98,7 +98,7 @@ resource "kubernetes_deployment" "app3" {
       spec {
         container {
           name  = var.app3_name
-          image = "mongo"
+          image = "mongo:4.4.12"
         }
       }
     }
