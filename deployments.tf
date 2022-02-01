@@ -28,14 +28,22 @@ resource "kubernetes_deployment" "app1" {
         }
       }
       spec {
+
         container {
           name  = var.app1_name
           image = "nginx"
+          resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
         }
+
       }
     }
   }
-}
 
 resource "kubernetes_deployment" "app2" {
   metadata {
