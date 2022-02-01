@@ -3,47 +3,51 @@
 ### feel free to change anything and to implement any function or method  ###
 #############################################################################
 
-resource "kubernetes_deployment" "app1" {
+resource "kubernetes_deployment" "instance"  {
+  for_each = var.apps_config
+
   metadata {
-    name      = var.app1_name
-    namespace = var.app1_name
+    name      = each.value.name.name
+    namespace = each.value.name.name
     labels = {
-      name = var.app1_labels.name
-      tier = var.app1_labels.tier
+      name = each.value.label.name
+      tier = each.value.label.tier
     }
   }
   spec {
     selector {
       match_labels = {
-        name = var.app1_labels.name
-        tier = var.app1_labels.tier
+        name = each.value.label.name
+        tier = each.value.label.tier
       }
     }
     template {
       metadata {
-        name = var.app1_name
+        name = each.value.name.name
         labels = {
-          name = var.app1_labels.name
-          tier = var.app1_labels.tier
+          name = each.value.label.name
+          tier = each.value.label.tier
         }
       }
       spec {
 
         container {
-          name  = var.app1_name
-          image = "nginx"
-          resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+          name  = each.value.name.name
+          image = each.value.name.image
+
+        resources {
+        memory: each.value.limits.memory
+        cpu: each.value.limits.cpu
+       }
+
         }
+
+      }
 
       }
     }
   }
+
 
 resource "kubernetes_deployment" "app2" {
   metadata {

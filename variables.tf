@@ -1,135 +1,156 @@
-### namespace variables for app1
-
-variable "app1_name" {
-  type        = string
-  description = "exposed app name"
-  default     = "stream-frontend"
-}
-
-variable "app1_labels" {
-  type        = map(string)
-  description = "labels for namespace app1"
-  default = {
-    "name"  = "stream-frontend"
-    "tier"  = "web"
-    "owner" = "product"
-  }
-}
-
-variable "app1_annotations" {
-  type        = map(string)
-  description = "annotations for namespace app1"
-  default = {
-    "serviceClass"       = "web-frontend"
-    "loadBalancer/class" = "external"
-  }
-}
-
-### namespace variables for app2
-
-variable "app2_name" {
-  type        = string
-  description = "exposed app name"
-  default     = "stream-backend"
-}
-
-variable "app2_labels" {
-  type        = map(string)
-  description = "labels for namespace app2"
-  default = {
-    "name"  = "stream-backend"
-    "tier"  = "api"
-    "owner" = "product"
-  }
-}
-
-variable "app2_annotations" {
-  type        = map(string)
-  description = "annotations for namespace app2"
-  default = {
-    "serviceClass"       = "web-backend"
-    "loadBalancer/class" = "internal"
-  }
-}
-
-### namespace variables for app3
-
-variable "app3_name" {
-  type        = string
-  description = "exposed app name"
-  default     = "stream-database"
-}
-
-variable "app3_labels" {
-  type        = map(string)
-  description = "labels for namespace app3"
-  default = {
-    "name"  = "stream-database"
-    "tier"  = "shared"
-    "owner" = "product"
-  }
-}
-
-variable "app3_annotations" {
-  type        = map(string)
-  description = "annotations for namespace app3"
-  default = {
-    "serviceClass"       = "database"
-    "loadBalancer/class" = "disabled"
-  }
-}
-
-variable "acl_frontend" {
-  description = "access allowed from this source"
+variable "apps_config" {
+  description = "details about the apps & database"
   type = map(object({
-    ingress  = string
-    egress   = string
-    port     = string
-    protocol = string
+
+    name = object({
+      name = string
+      image = string
+    })
+
+    label = object
+    ({
+      name = string
+      tier = string
+      owner = string
+    })
+
+    annotation = object
+    ({
+      serviceClass = string
+      loadBalancer = string
+    })
+
+    acl = object
+    ({
+      ingress  = string
+      egress   = string
+      port     = string
+      protocol = string
+    })
+
+    limits = object
+    ({
+      cpu    = string
+      memory = string
+    })
+
+    limit_request = object
+    ({
+      cpu    = string
+      memory = string
+    })
+
   }))
-  default = {
-    frontend = {
-      ingress  = "stream-backend"
-      egress   = "0.0.0.0/0"
-      port     = "80"
-      protocol = "TCP"
-    }
+
+  apps_config = {
+    frontend= {
+          name = {
+            name    = "stream-frontend"
+            image   = "nginx"
+                  }
+
+          Label = {
+            name = "stream-frontend"
+            tier  = "web"
+            owner = "product"
+                  }
+
+          annotation = {
+            serviceClass = "web-frontend"
+            loadBalancer = "external"
+                 }
+
+          acl = {
+            ingress  = "stream-backend"
+            egress   = "0.0.0.0/0"
+            port     = "80"
+            protocol = "TCP"
+          }
+
+          limits = {
+             cpu    = "0.6"
+             memory = "512Mi"
+          }
+
+          limit_request = {
+              cpu    = "300m"
+              memory = "50Mi"
+          }
+  }
+    backend= {
+          name = {
+            name    = "stream-backend"
+            image   = "nginx"
+                  }
+
+          Label = {
+            name = "stream-backend"
+            tier  = "api"
+            owner = "product"
+                  }
+
+          annotation = {
+            serviceClass = "web-frontend"
+            loadBalancer = "external"
+                 }
+
+          acl = {
+            ingress  = "stream-frontend"
+            egress   = "172.17.0.0/24"
+            port     = "80"
+            protocol = "TCP"
+              }
+
+          limits = {
+             cpu    = "0.5"
+             memory = "512Mi"
+          }
+
+          limit_request = {
+              cpu    = "300m"
+              memory = "50Mi"
+          }
+  }
+    database= {
+          name = {
+            name    = "stream-backend"
+            image   = "stream-database"
+                  }
+
+          Label = {
+            name = "stream-database"
+            tier  = "shared"
+            owner = "product"
+                  }
+
+          annotation = {
+            serviceClass = "database"
+            loadBalancer = "disabled"
+                 }
+
+         acl = {
+            ingress  = "stream-backend"
+            egress   = "172.17.0.0/24"
+            port     = "27017"
+            protocol = "TCP"
+                }
+
+          limits = {
+             cpu    = "0.7"
+             memory = "512Mi"
+          }
+
+          limit_request = {
+              cpu    = "300m"
+              memory = "50Mi"
+          }
+  }
+
   }
 }
 
-variable "acl_backend" {
-  description = "access allowed from this source"
-  type = map(object({
-    ingress = string
-    egress  = string
-    port     = string
-    protocol = string
-  }))
-  default = {
-    backend = {
-      ingress  = "stream-frontend"
-      egress   = "172.17.0.0/24"
-      port     = "80"
-      protocol = "TCP"
 
-    }
-  }
-}
 
-variable "acl_database" {
-  description = "access allowed from this source"
-  type = map(object({
-    ingress = string
-    egress  = string
-    port     = string
-    protocol = string
-  }))
-  default = {
-    database = {
-      ingress  = "stream-backend"
-      egress   = "172.17.0.0/24"
-      port     = "27017"
-      protocol = "TCP"
-    }
-  }
-}
+
+
+
