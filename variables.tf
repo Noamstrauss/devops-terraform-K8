@@ -19,13 +19,13 @@ variable "apps_config2" {
 
   default = {
     frontend = {
-       name         = "stream-frontend"
+       name         = "stream-frontend-test"
        image        = "nginx"
        tier         = "web"
        owner        = "product"
-       serviceClass = "web-frontend"
+       serviceClass = "web-frontend-test"
        loadBalancer = "external"
-       ingress      = "stream-backend"
+       ingress      = "stream-backend-test"
        egress       = "0.0.0.0/0"
        port         = "80"
        protocol     = "TCP"
@@ -35,14 +35,14 @@ variable "apps_config2" {
        req_memory   = "150Mi"
     },
     backend  = {
-      name          = "stream-frontend"
+      name          = "stream-backend-test"
        image        = "nginx"
-       tier         = "web"
+       tier         = "api"
        owner        = "product"
-       serviceClass = "web-frontend"
-       loadBalancer = "external"
-       ingress      = "stream-backend"
-       egress       = "0.0.0.0/0"
+       serviceClass = "web-backend-test"
+       loadBalancer = "internal"
+       ingress      = "stream-frontend-test"
+       egress       = "172.17.0.0/24"
        port         = "81"
        protocol     = "TCP"
        max_cpu      = "0.6"
@@ -51,13 +51,13 @@ variable "apps_config2" {
        req_memory   = "150Mi"
     },
     database  = {
-       name         = "stream-database"
+       name         = "stream-database-test"
        image        = "mongo:4.4.12"
        tier         = "shared"
        owner        = "product"
        serviceClass = "database"
        loadBalancer = "disabled"
-       ingress      = "stream-backend"
+       ingress      = "stream-backend-test"
        egress       = "172.17.0.0/24"
        port         = "27017"
        protocol     = "TCP"
