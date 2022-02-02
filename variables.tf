@@ -1,9 +1,10 @@
 variable "apps_config2" {
-  description = "details about the frontend and backend apps"
+  description = "details about the apps & database"
   type        = map(object({
     name         = string
     tier         = string
     image        = string
+    imagePullPolicy = string
     owner        = string
     serviceClass = string
     loadBalancer = string
@@ -21,6 +22,7 @@ variable "apps_config2" {
     frontend = {
        name         = "stream-frontend-test"
        image        = "nginx"
+       imagePullPolicy = "IfNotPresent"
        tier         = "web"
        owner        = "product"
        serviceClass = "web-frontend-test"
@@ -37,6 +39,7 @@ variable "apps_config2" {
     backend  = {
       name          = "stream-backend-test"
        image        = "nginx"
+       imagePullPolicy = "IfNotPresent"
        tier         = "api"
        owner        = "product"
        serviceClass = "web-backend-test"
@@ -53,6 +56,7 @@ variable "apps_config2" {
     database  = {
        name         = "stream-database-test"
        image        = "mongo:4.4.12"
+       imagePullPolicy = "IfNotPresent"
        tier         = "shared"
        owner        = "product"
        serviceClass = "database"

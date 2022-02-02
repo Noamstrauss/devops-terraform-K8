@@ -1,5 +1,5 @@
 
-resource "kubernetes_network_policy" "instance" {
+resource "kubernetes_network_policy" "network" {
 for_each = {for inst in var.apps_config2:  inst.name => inst}
   metadata {
     name      = format("%s-acl", each.value["name"])
