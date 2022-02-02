@@ -33,7 +33,9 @@ resource "kubernetes_deployment" "instance"  {
         container {
           name  = each.value["name"]
           image = each.value["image"]
-          imagePullPolicy = each.value["imagePullPolicy"]
+          image_pull_policy = each.value["imagePullPolicy"]
+
+
 
         resources {
           limits = {
