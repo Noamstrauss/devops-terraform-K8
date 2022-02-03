@@ -32,7 +32,7 @@ variable "apps_config3" {
 
   default = {
     frontend = {
-       name         = "stream-frontend-test"
+       name         = "stream-frontend"
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
 
@@ -65,7 +65,7 @@ variable "apps_config3" {
        }
     },
     backend  = {
-      name          = "stream-backend-test"
+      name          = "stream-backend"
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
 
