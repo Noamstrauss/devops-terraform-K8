@@ -6,13 +6,13 @@ by Noam Strauss
 1.reduce variable count
 
 - I thought of creating another variables file that has fewer variables to manage.
-#### Answer 1: I have created one variable named "apps_config" to configure the 3 tier app values ####
+#### Answer 1: I have created one variable named "apps_config2" to configure the 3 tier app values ####
 
 ----
 2. remove duplicate code
-- To Create a template and iterate over a list when provisioning resources  
+- To iterate over a list when provisioning resources  
  ( https://learn.hashicorp.com/tutorials/terraform/for-each )
-#### Answer 2: I have a loop using for-each to provision the 3 apps ####
+#### Answer 2: I used for-each loop to provision the 3 apps ####
 
 
 ----
