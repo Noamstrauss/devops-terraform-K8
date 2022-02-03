@@ -1,15 +1,15 @@
 resource "kubernetes_namespace" "namespace" {
-for_each = {for inst in var.apps_config2:  inst.name => inst}
+for_each = var.apps_config3
   metadata {
-    name = each.value["name"]
+    name = each.value.name
     labels = {
-      name  = each.value["name"]
-      tier  = each.value["tier"]
-      owner = each.value["owner"]
+      name  = each.value.name
+      tier  = each.value.labels.tier
+      owner = each.value.labels.owner
     }
     annotations = {
-      "serviceClass"       = each.value["serviceClass"]
-      "loadBalancer/class" = each.value["loadBalancer"]
+      "serviceClass"       = each.value.annotations.serviceClass
+      "loadBalancer/class" = each.value.annotations.loadBalancer
     }
   }
 }

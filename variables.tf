@@ -1,74 +1,129 @@
-variable "apps_config2" {
+variable "apps_config3" {
   description = "Configuration for apps & database"
   type        = map(object({
     name         = string
-    tier         = string
     image        = string
     imagePullPolicy = string
-    owner        = string
-    serviceClass = string
-    loadBalancer = string
-    ingress      = string
-    egress       = string
-    port         = string
-    protocol     = string
-    max_cpu      = string
-    max_memory   = string
-    req_cpu      = string
-    req_memory   = string
+
+     acl = object({
+       portname    = string
+       ingress     = string
+      egress       = string
+      port         = string
+      protocol     = string
+    })
+
+    annotations = object({
+      serviceClass = string
+      loadBalancer = string
+    })
+    labels = object({
+      name         = string
+      tier         = string
+      owner        = string
+    })
+    limit = object({
+      max_cpu = string
+      max_memory   = string
+      req_cpu = string
+      req_memory = string
+    })
   }))
 
   default = {
     frontend = {
-       name         = "stream-frontend"
+       name         = "stream-frontend-test"
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
-       tier         = "web"
-       owner        = "product"
+
+
+
+      annotations = {
        serviceClass = "web-frontend"
        loadBalancer = "external"
-       ingress      = "stream-backend"
+      }
+
+      acl = {
+        ingress      = "stream-backend"
        egress       = "0.0.0.0/0"
        port         = "80"
+        portname    = "http"
        protocol     = "TCP"
-       max_cpu      = "0.6"
-       max_memory   = "512Mi"
-       req_cpu      = "0.4"
-       req_memory   = "150Mi"
+
+
+      }
+      labels = {
+        name         = "stream-frontend"
+        tier         = "web"
+        owner        = "product"
+       }
+       limit = {
+        max_cpu      = "0.6"
+        max_memory   = "512Mi"
+        req_cpu      = "0.4"
+        req_memory   = "150Mi"
+       }
     },
     backend  = {
-      name          = "stream-backend"
+      name          = "stream-backend-test"
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
-       tier         = "api"
-       owner        = "product"
-       serviceClass = "web-backend"
-       loadBalancer = "internal"
-       ingress      = "stream-frontend"
-       egress       = "172.17.0.0/24"
-       port         = "81"
+
+      annotations = {
+       serviceClass = "web-frontend"
+       loadBalancer = "external"
+      }
+
+       acl = {
+        ingress      = "stream-backend"
+       egress       = "0.0.0.0/0"
+       port         = "80"
+         portname    = "http"
        protocol     = "TCP"
-       max_cpu      = "0.6"
-       max_memory   = "512Mi"
-       req_cpu      = "0.4"
-       req_memory   = "150Mi"
+
+      }
+      labels = {
+        name         = "stream-backend"
+        tier         = "api"
+        owner        = "product"
+       }
+       limit = {
+        max_cpu      = "0.6"
+        max_memory   = "512Mi"
+        req_cpu      = "0.4"
+        req_memory   = "150Mi"
+       }
     },
     database  = {
        name         = "stream-database"
        image        = "mongo:4.4.12"
        imagePullPolicy = "IfNotPresent"
-       tier         = "shared"
-       owner        = "product"
+
+
+      annotations = {
        serviceClass = "database"
        loadBalancer = "disabled"
-       ingress      = "stream-backend"
-       egress       = "172.17.0.0/24"
-       port         = "27017"
+      }
+
+       acl = {
+        ingress      = "stream-backend"
+       egress       = "0.0.0.0/0"
+       port         = "80"
+         portname    = "mongodb"
        protocol     = "TCP"
-       max_cpu      = "0.7"
-       max_memory   = "750Mi"
-       req_cpu      = "0.4"
-       req_memory   = "150Mi"
+
+      }
+       labels = {
+        name         = "stream-database"
+        tier         = "shared"
+        owner        = "product"
+       }
+       limit = {
+        max_cpu      = "0.6"
+        max_memory   = "512Mi"
+        req_cpu      = "0.4"
+        req_memory   = "150Mi"
+       }
   }
 }
 
