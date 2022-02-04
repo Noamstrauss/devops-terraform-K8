@@ -22,6 +22,7 @@ variable "apps_config3" {
        name         = string
        tier         = string
        owner        = string
+      env           = string
     })
     limit = object({
        max_cpu = string
@@ -59,6 +60,7 @@ variable "apps_config3" {
         name         = "stream-frontend"
         tier         = "web"
         owner        = "product"
+        env        = "prod"
        }
        limit = {
         max_cpu      = "0.6"
@@ -89,6 +91,7 @@ variable "apps_config3" {
         name         = "stream-backend"
         tier         = "api"
         owner        = "product"
+        env        = "prod"
        }
        limit = {
         max_cpu      = "0.6"
@@ -120,6 +123,7 @@ variable "apps_config3" {
         name         = "stream-database"
         tier         = "shared"
         owner        = "product"
+         env         = "prod"
        }
        limit = {
         max_cpu      = "0.6"
