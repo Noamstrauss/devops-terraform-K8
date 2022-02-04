@@ -34,7 +34,7 @@ variable "apps_config3" {
   default = {
     frontend = {
        name         = "stream-frontend"
-       image        = "digitalocean/flask-helloworld"
+       image        = "nginx"
        imagePullPolicy = "IfNotPresent"
 
 
@@ -47,7 +47,7 @@ variable "apps_config3" {
       acl = {
         ingress      = "stream-backend"
        egress       = "0.0.0.0/0"
-       port         = "80"
+       port         = "81"
         portname    = "http"
        protocol     = "TCP"
 
@@ -76,9 +76,9 @@ variable "apps_config3" {
       }
 
        acl = {
-        ingress      = "stream-backend"
+        ingress      = "stream-frontend"
        egress       = "172.17.0.0/24"
-       port         = "80"
+       port         = "81"
          portname    = "http"
        protocol     = "TCP"
 

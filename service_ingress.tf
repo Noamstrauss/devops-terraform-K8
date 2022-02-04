@@ -1,4 +1,4 @@
-/*
+
 resource "kubernetes_service_v1" "example" {
   metadata {
     name = "stream-frontend-service"
@@ -10,41 +10,27 @@ resource "kubernetes_service_v1" "example" {
     }
     port {
       port        = 80
-      target_port = 5000
     }
 
 
   }
 }
-
-*/
-
-
-/*
-
-resource "kubernetes_ingress_v1" "example" {
-  wait_for_load_balancer = false
+resource "kubernetes_service_v1" "example1" {
   metadata {
-    name = "example"
-    namespace = "stream-frontend"
+    name = "stream-backend-service"
+    namespace = "stream-backend"
   }
   spec {
-    rule {
-      http {
-        path {
-          path = "
-"
-          backend {
-            service {
-              name = "stream-frontend-service"
-              port {
-                number = 80
-              }
-            }
-          }
-        }
-      }
+    selector = {
+      name         = "stream-backend"
     }
+    port {
+      port        = 80
+    }
+
+
   }
 }
-*/
+
+
+
