@@ -1,32 +1,33 @@
 variable "apps_config3" {
   description = "Configuration for apps & database"
   type        = map(object({
-    name         = string
-    image        = string
-    imagePullPolicy = string
+       name         = string
+       image        = string
+       imagePullPolicy = string
 
      acl = object({
-       portname    = string
+       targetport    = string
        ingress     = string
-      egress       = string
-      port         = string
-      protocol     = string
+       egress       = string
+       port         = string
+       protocol     = string
+       targetport  = string
     })
 
     annotations = object({
-      serviceClass = string
-      loadBalancer = string
+       serviceClass = string
+       loadBalancer = string
     })
     labels = object({
-      name         = string
-      tier         = string
-      owner        = string
+       name         = string
+       tier         = string
+       owner        = string
     })
     limit = object({
-      max_cpu = string
-      max_memory   = string
-      req_cpu = string
-      req_memory = string
+       max_cpu = string
+       max_memory   = string
+       req_cpu = string
+       req_memory = string
     })
 
   }))
@@ -48,8 +49,9 @@ variable "apps_config3" {
         ingress      = "stream-backend"
        egress       = "0.0.0.0/0"
        port         = "81"
-        portname    = "http"
+        targetport  = "80"
        protocol     = "TCP"
+
 
 
       }
@@ -79,7 +81,7 @@ variable "apps_config3" {
         ingress      = "stream-frontend"
        egress       = "172.17.0.0/24"
        port         = "81"
-         portname    = "http"
+         targetport    = "80"
        protocol     = "TCP"
 
       }
@@ -110,7 +112,7 @@ variable "apps_config3" {
         ingress      = "stream-backend"
        egress       = "172.17.0.0/24"
        port         = "27017"
-         portname    = "mongodbport"
+         targetport = "27017"
        protocol     = "TCP"
 
       }
