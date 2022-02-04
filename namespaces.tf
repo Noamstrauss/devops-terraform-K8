@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "namespace" {
+resource "kubernetes_namespace" "instance" {
 for_each = var.apps_config3
   metadata {
     name = each.value.name

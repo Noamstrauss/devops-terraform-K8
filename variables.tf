@@ -28,12 +28,13 @@ variable "apps_config3" {
       req_cpu = string
       req_memory = string
     })
+
   }))
 
   default = {
     frontend = {
        name         = "stream-frontend"
-       image        = "nginx"
+       image        = "digitalocean/flask-helloworld"
        imagePullPolicy = "IfNotPresent"
 
 
@@ -70,13 +71,13 @@ variable "apps_config3" {
        imagePullPolicy = "IfNotPresent"
 
       annotations = {
-       serviceClass = "web-frontend"
-       loadBalancer = "external"
+       serviceClass = "web-backend"
+       loadBalancer = "internal"
       }
 
        acl = {
         ingress      = "stream-backend"
-       egress       = "0.0.0.0/0"
+       egress       = "172.17.0.0/24"
        port         = "80"
          portname    = "http"
        protocol     = "TCP"
@@ -107,9 +108,9 @@ variable "apps_config3" {
 
        acl = {
         ingress      = "stream-backend"
-       egress       = "0.0.0.0/0"
-       port         = "80"
-         portname    = "mongodb"
+       egress       = "172.17.0.0/24"
+       port         = "27017"
+         portname    = "mongodbport"
        protocol     = "TCP"
 
       }
