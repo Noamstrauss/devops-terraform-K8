@@ -17,6 +17,11 @@ resource "kubernetes_service_v1" "example" {
   }
 }
 
+*/
+
+
+/*
+
 resource "kubernetes_ingress_v1" "example" {
   wait_for_load_balancer = false
   metadata {
@@ -27,8 +32,8 @@ resource "kubernetes_ingress_v1" "example" {
     rule {
       http {
         path {
-          path = "*/
-/*"
+          path = "
+"
           backend {
             service {
               name = "stream-frontend-service"
