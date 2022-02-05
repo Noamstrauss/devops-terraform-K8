@@ -1,4 +1,3 @@
-
 resource "kubernetes_service_v1" "instance" {
   for_each = var.apps_config3
   metadata {
@@ -7,17 +6,13 @@ resource "kubernetes_service_v1" "instance" {
   }
   spec {
     selector = {
-      name     = each.value.name
+      tier     = each.value.labels.tier
     }
     port {
       name = "http"
       port        = each.value.acl.port
       target_port = each.value.acl.targetport
-    }
-     port {
-      name = "https"
-      port        = "443"
-      target_port = "443"
+      protocol = each.value.acl.protocol
     }
   }
 }

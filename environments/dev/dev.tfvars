@@ -4,8 +4,6 @@ apps_config3 = {
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
 
-
-
       annotations = {
        serviceClass = "web-frontend-dev"
        loadBalancer = "external"
@@ -17,8 +15,6 @@ apps_config3 = {
        port          = "81"
         targetport   = "80"
        protocol      = "TCP"
-
-
 
       }
       labels = {
@@ -33,6 +29,8 @@ apps_config3 = {
         req_cpu      = "0.4"
         req_memory   = "150Mi"
        }
+
+
     },
     backend  = {
       name             = "stream-backend-dev"
@@ -46,7 +44,7 @@ apps_config3 = {
 
        acl = {
         ingress      = "stream-frontend-dev"
-       egress        = "10.96.0.0/12"
+       egress        = "10.96.0.0/8"
        port          = "81"
        targetport    = "80"
        protocol      = "TCP"
@@ -77,8 +75,8 @@ apps_config3 = {
       }
 
        acl = {
-        ingress      = "stream-backend-prod"
-       egress       = "10.96.0.0/12"
+        ingress      = "stream-backend-dev"
+       egress       = "10.96.0.0/8"
        port         = "27017"
          targetport = "27017"
        protocol     = "TCP"

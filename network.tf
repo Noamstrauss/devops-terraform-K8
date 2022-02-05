@@ -8,7 +8,7 @@ for_each = var.apps_config3
     policy_types = ["Ingress", "Egress"]
     pod_selector {
       match_labels = {
-        tier = each.value.labels.tier
+        name = each.value.name
       }
     }
     ingress {
