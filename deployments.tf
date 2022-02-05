@@ -3,10 +3,10 @@
 ### feel free to change anything and to implement any function or method  ###
 #############################################################################
 
-resource "kubernetes_deployment" "instance"  {
+resource "kubernetes_deployment" "deployment"  {
      for_each = var.apps_config3
   metadata {
-    name      = each.value.name
+    name = each.value.name
     namespace = each.value.name
     labels = {
       name = each.value.name

@@ -1,7 +1,4 @@
-
-
-
-##Devops Assignment Q&A
+###Devops Assignment Q&A
 by Noam Strauss
 
 
@@ -23,9 +20,12 @@ by Noam Strauss
 3.change network acl
 - To change the port in the ingress in frontend -> acl -> port in variables.tf to the new port (81)
 - To Create A Service for each app
+- In minikube I had to use "calico" plugin for network policy to work
 <p style='color:purple'>Answer 3 : 
- A. lets assume Developers Changed backend port to 81 , So we need to change the frontend -> acl -> port to (81)<br>
- B. Created A Service for apps & Database.</p>
+ (A). lets assume Developers Changed backend port to 81 , So we need to change 
+the frontend -> acl -> port in variables.tf to 81.<br>
+ -
+(B). Created A Service for apps & Database.</p>
 
  
 
@@ -41,19 +41,17 @@ by Noam Strauss
 
 ----
 5.make scaling possible
-- Provision metric server 
+- We need to Provision metric server then (See Notes)
 - Configure HorizontalPodAutoscaler (HPA) 
-- ( Because I Had a bit of trouble getting metric server to work I used the following Command instead >> ) ![img.png](img.png)
-- Alternative: to use `kubectl autoscale --namespace="<namespacehere>" deployment <deploymenthere> --cpu-percent=50 --min=2 --max=4`
- <p style='color:purple'>Answer 4 : I Used The Command Above To Provision HPA</p>
+- You can alternatively use the command bellow >
+`kubectl autoscale --namespace="<namespacehere>" deployment <deploymenthere> --cpu-percent=50 --min=2 --max=4`
+ <p style='color:purple'>Answer 5 : I Used The Command Above To Provision HPA</p>
 
 ----
 6. prepare for multi-environment
 - Use terraform workspaces
-- Alternative: To add an input variable that's k8s namespaces accordingly
-- Alternative: Use 3 .tfvars files to initialize the env variables 
-- usage >> `terraform apply -auto-approve -input=false -var-file=environments/test/test.tfvars`
- <p style='color:green'>Answer 4 : Created a .tfvar file under /environments for each ENV (Usage in terraform apply ^)</p>
+ usage >> `terraform apply -auto-approve -var-file=environments/test/test.tfvars`
+ <p style='color:purple'>Answer 4 : Use Terraform workspace with .tfvar files to provision different ENVs (Usage in terraform apply ^)</p>
 
 
 ----
@@ -64,6 +62,9 @@ by Noam Strauss
 (https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret)
 - 
 ------------------------------------
+Notes:
+ ![img.png](img.png)
+- ( Because I Had a bit of trouble getting metric server to work I used the Command >> )
+-------------------------------------
 Questions:
-- why terraform? (helm maybe?)
-- where is the service?
+- where is the service resource?

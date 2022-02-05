@@ -1,4 +1,4 @@
- test = {
+apps_config3 = {
     frontend = {
        name         = "stream-frontend-dev"
        image        = "nginx"
@@ -7,16 +7,16 @@
 
 
       annotations = {
-       serviceClass = "web-frontend"
+       serviceClass = "web-frontend-dev"
        loadBalancer = "external"
       }
 
       acl = {
         ingress      = "stream-backend-dev"
-       egress       = "0.0.0.0/0"
-       port         = "81"
-        targetport  = "80"
-       protocol     = "TCP"
+       egress        = "0.0.0.0/0"
+       port          = "81"
+        targetport   = "80"
+       protocol      = "TCP"
 
 
 
@@ -35,21 +35,21 @@
        }
     },
     backend  = {
-      name          = "stream-backend-dev"
-       image        = "nginx"
+      name             = "stream-backend-dev"
+       image           = "nginx"
        imagePullPolicy = "IfNotPresent"
 
       annotations = {
-       serviceClass = "web-backend"
-       loadBalancer = "internal"
+       serviceClass    = "web-backend-dev"
+       loadBalancer    = "internal"
       }
 
        acl = {
         ingress      = "stream-frontend-dev"
-       egress       = "172.17.0.0/24"
-       port         = "81"
-         targetport = "80"
-       protocol     = "TCP"
+       egress        = "172.17.0.0/24"
+       port          = "81"
+       targetport    = "80"
+       protocol      = "TCP"
 
       }
       labels = {
@@ -66,8 +66,8 @@
        }
     },
     database  = {
-       name         = "stream-database-dev"
-       image        = "mongo:4.4.12"
+       name            = "stream-database-dev"
+       image           = "mongo:4.4.12"
        imagePullPolicy = "IfNotPresent"
 
 
@@ -77,7 +77,7 @@
       }
 
        acl = {
-        ingress      = "stream-backend-dev"
+        ingress      = "stream-backend-prod"
        egress       = "172.17.0.0/24"
        port         = "27017"
          targetport = "27017"

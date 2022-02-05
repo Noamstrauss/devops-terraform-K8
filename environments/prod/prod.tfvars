@@ -1,31 +1,31 @@
- test = {
+apps_config3 = {
     frontend = {
-       name         = "stream-frontend"
+       name         = "stream-frontend-prod"
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
 
 
 
       annotations = {
-       serviceClass = "web-frontend"
+       serviceClass = "web-frontend-prod"
        loadBalancer = "external"
       }
 
       acl = {
-        ingress      = "stream-backend"
-       egress       = "0.0.0.0/0"
-       port         = "81"
-        targetport  = "80"
-       protocol     = "TCP"
+        ingress      = "stream-backend-prod"
+       egress        = "0.0.0.0/0"
+       port          = "81"
+        targetport   = "80"
+       protocol      = "TCP"
 
 
 
       }
       labels = {
-        name         = "stream-frontend"
+        name         = "stream-frontend-prod"
         tier         = "web"
         owner        = "product"
-        env        = "prod"
+        env          = "prod"
        }
        limit = {
         max_cpu      = "0.6"
@@ -35,28 +35,28 @@
        }
     },
     backend  = {
-      name          = "stream-backend"
-       image        = "nginx"
+      name             = "stream-backend-prod"
+       image           = "nginx"
        imagePullPolicy = "IfNotPresent"
 
       annotations = {
-       serviceClass = "web-backend"
-       loadBalancer = "internal"
+       serviceClass    = "web-backend-prod"
+       loadBalancer    = "internal"
       }
 
        acl = {
-        ingress      = "stream-frontend"
-       egress       = "172.17.0.0/24"
-       port         = "81"
-         targetport    = "80"
-       protocol     = "TCP"
+        ingress      = "stream-frontend-prod"
+       egress        = "172.17.0.0/24"
+       port          = "81"
+       targetport    = "80"
+       protocol      = "TCP"
 
       }
       labels = {
-        name         = "stream-backend"
+        name         = "stream-backend-prod"
         tier         = "api"
         owner        = "product"
-        env        = "prod"
+        env          = "prod"
        }
        limit = {
         max_cpu      = "0.6"
@@ -66,8 +66,8 @@
        }
     },
     database  = {
-       name         = "stream-database"
-       image        = "mongo:4.4.12"
+       name            = "stream-database-prod"
+       image           = "mongo:4.4.12"
        imagePullPolicy = "IfNotPresent"
 
 
@@ -77,7 +77,7 @@
       }
 
        acl = {
-        ingress      = "stream-backend"
+        ingress      = "stream-backend-prod"
        egress       = "172.17.0.0/24"
        port         = "27017"
          targetport = "27017"
@@ -85,10 +85,10 @@
 
       }
        labels = {
-        name         = "stream-database"
+        name         = "stream-database-prod"
         tier         = "shared"
         owner        = "product"
-         env        = "prod"
+         env         = "prod"
        }
        limit = {
         max_cpu      = "0.6"
