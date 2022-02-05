@@ -9,5 +9,5 @@ resource "kubernetes_secret" "secret" {
     password = "YouWontGuessThis"
   }
 
-  type = "kubernetes.io/basic-auth"
+  type = "Opaque"
 }

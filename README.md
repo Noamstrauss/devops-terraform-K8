@@ -3,21 +3,21 @@ by Noam Strauss
 
 
 ----
-1.reduce variable count
+###1.reduce variable count
 
 - Creating one variable file that has fewer variables to manage.
 <p style='color:yellow'>Answer: I have created one variable named "apps_config3" to configure the 3 tier app values.</p>
 
 
 ----
-2. remove duplicate code
+###2. remove duplicate code
 - To iterate over a list when provisioning resources
  ( https://learn.hashicorp.com/tutorials/terraform/for-each )
 <p style='color:yellow'>Answer: I used for-each loop to provision the 3 apps.</p>
 
 
 ----
-3.change network acl
+###3.change network acl
 - To change the port in the ingress in frontend -> acl -> port in variables.tf to the new port (81)
 - To Create A Service for each app
 - In minikube I had to use "calico" plugin for network policy to work
@@ -31,7 +31,7 @@ the frontend -> acl -> port in variables.tf to 81.<br>
 
 
 ----
-4.implement resource management
+###4.implement resource management
 - Add cpu/memory limit to the container brackets
 - Alternative: To use a LimitRange object
 - You should also enable metric server using `minikube addons enable metrics-server`
@@ -40,7 +40,7 @@ the frontend -> acl -> port in variables.tf to 81.<br>
 
 
 ----
-5.make scaling possible
+###5.make scaling possible
 - We need to Provision metric server then (See Notes)
 - Configure HorizontalPodAutoscaler (HPA) 
 - You can alternatively use the command bellow >
@@ -48,21 +48,21 @@ the frontend -> acl -> port in variables.tf to 81.<br>
  <p style='color:yellow'>Answer: I Used The Command Above To Provision HPA</p>
 
 ----
-6. prepare for multi-environment
+###6. prepare for multi-environment
 - Use terraform workspaces
  usage >> `terraform apply -auto-approve -var-file=environments/test/test.tfvars`
  <p style='color:yellow'>Answer: Use Terraform workspaces with .tfvar files to provision different ENVs (Usage in terraform apply ^)</p>
 
 
 ----
-7. add environment variable to service
-- use secrets (google)
-- key volt?
-- file?
+###7. add environment variable to service
+- To Create a Secret Resource and attach to the container
 (https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret)
-- 
+- <p style='color:yellow'>Answer: To Create a Secret resource and attach to the during deployment to the container.</p>
 ------------------------------------
-Notes:
+
+
+####Notes:
  ![img.png](img.png)
 - ( Because I Had a bit of trouble getting metric server to work I used the command.)
 -------------------------------------

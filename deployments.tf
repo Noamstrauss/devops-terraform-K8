@@ -34,7 +34,7 @@ resource "kubernetes_deployment" "deployment"  {
           image = each.value.image
           image_pull_policy = each.value.imagePullPolicy
           env {
-            name = "DB-PASSWORD"
+            name = "DB_PASSWORD"
             value_from {
               secret_key_ref {
                 name = "db-secret"
