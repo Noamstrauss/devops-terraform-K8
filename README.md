@@ -24,7 +24,7 @@ by Noam Strauss
 <p style='color:purple'>Answer 3 : 
  (A). lets assume Developers Changed backend port to 81 , So we need to change 
 the frontend -> acl -> port in variables.tf to 81.<br>
- -
+ - 
 (B). Created A Service for apps & Database.</p>
 
  
