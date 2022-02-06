@@ -47,7 +47,7 @@ the frontend -> acl -> port in variables.tf to 81.<br>
 - Configure HorizontalPodAutoscaler (HPA) 
 - You can alternatively use the kubectl to provision with the command bellow >
 `kubectl autoscale --namespace="<namespacehere>" deployment <deploymenthere> --cpu-percent=70 --min=2 --max=4`
- <p style='color:yellow'>Answer: Provisioned HPA to Auto scale pods.</p>
+ <p style='color:yellow'>Answer: Provisioned HPA to implement Autoscaling.</p>
 
 ----
 ### 6. prepare for multi-environment
