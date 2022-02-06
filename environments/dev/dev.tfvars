@@ -1,7 +1,7 @@
 apps_config3 = {
     frontend = {
-       name         = "stream-frontend-dev"
-       image        = "nginx"
+       name            = "stream-frontend-dev"
+       image           = "nginx"
        imagePullPolicy = "IfNotPresent"
 
       annotations = {
@@ -10,19 +10,19 @@ apps_config3 = {
       }
 
       acl = {
-        ingress      = "stream-backend-dev"
+       ingress       = "stream-backend-dev"
        egress        = "0.0.0.0/0"
        port          = "81"
-        targetport   = "80"
+       targetport    = "80"
        protocol      = "TCP"
 
       }
       labels = {
-        name         = "stream-frontend-dev"
         tier         = "web"
         owner        = "product"
         env          = "dev"
        }
+
        limit = {
         max_cpu      = "0.6"
         max_memory   = "512Mi"
@@ -33,7 +33,6 @@ apps_config3 = {
 
     },
     backend  = {
-      name             = "stream-backend-dev"
        image           = "nginx"
        imagePullPolicy = "IfNotPresent"
 
@@ -43,7 +42,7 @@ apps_config3 = {
       }
 
        acl = {
-        ingress      = "stream-frontend-dev"
+       ingress       = "stream-frontend-dev"
        egress        = "10.96.0.0/8"
        port          = "81"
        targetport    = "80"
@@ -51,7 +50,6 @@ apps_config3 = {
 
       }
       labels = {
-        name         = "stream-backend-dev"
         tier         = "api"
         owner        = "product"
         env          = "dev"
@@ -62,12 +60,14 @@ apps_config3 = {
         req_cpu      = "0.4"
         req_memory   = "150Mi"
        }
+
+
+
     },
     database  = {
        name            = "stream-database-dev"
        image           = "mongo:4.4.12"
        imagePullPolicy = "IfNotPresent"
-
 
       annotations = {
        serviceClass = "database"
@@ -75,10 +75,10 @@ apps_config3 = {
       }
 
        acl = {
-        ingress      = "stream-backend-dev"
+       ingress      = "stream-backend-dev"
        egress       = "10.96.0.0/8"
        port         = "27017"
-         targetport = "27017"
+       targetport   = "27017"
        protocol     = "TCP"
 
       }
@@ -86,8 +86,9 @@ apps_config3 = {
         name         = "stream-database-dev"
         tier         = "shared"
         owner        = "product"
-         env         = "dev"
+        env          = "dev"
        }
+
        limit = {
         max_cpu      = "0.6"
         max_memory   = "512Mi"

@@ -4,38 +4,36 @@ apps_config3 = {
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
 
-
-
       annotations = {
        serviceClass = "web-frontend-prod"
        loadBalancer = "external"
       }
 
       acl = {
-        ingress      = "stream-backend-prod"
+       ingress       = "stream-backend-prod"
        egress        = "0.0.0.0/0"
        port          = "81"
-        targetport   = "80"
+       targetport    = "80"
        protocol      = "TCP"
-
-
 
       }
       labels = {
-        name         = "stream-frontend-prod"
         tier         = "web"
         owner        = "product"
         env          = "prod"
        }
+
        limit = {
         max_cpu      = "0.6"
         max_memory   = "512Mi"
         req_cpu      = "0.4"
         req_memory   = "150Mi"
        }
+
+
     },
     backend  = {
-      name             = "stream-backend-prod"
+       name            = "stream-backend-prod"
        image           = "nginx"
        imagePullPolicy = "IfNotPresent"
 
@@ -45,7 +43,7 @@ apps_config3 = {
       }
 
        acl = {
-        ingress      = "stream-frontend-prod"
+       ingress       = "stream-frontend-prod"
        egress        = "10.96.0.0/12"
        port          = "81"
        targetport    = "80"
@@ -53,17 +51,19 @@ apps_config3 = {
 
       }
       labels = {
-        name         = "stream-backend-prod"
         tier         = "api"
         owner        = "product"
         env          = "prod"
        }
+
        limit = {
         max_cpu      = "0.6"
         max_memory   = "512Mi"
         req_cpu      = "0.4"
         req_memory   = "150Mi"
        }
+
+
     },
     database  = {
        name            = "stream-database-prod"
@@ -77,19 +77,19 @@ apps_config3 = {
       }
 
        acl = {
-        ingress      = "stream-backend-prod"
+       ingress      = "stream-backend-prod"
        egress       = "10.96.0.0/12"
        port         = "27017"
-         targetport = "27017"
+       targetport   = "27017"
        protocol     = "TCP"
 
       }
        labels = {
-        name         = "stream-database-prod"
         tier         = "shared"
         owner        = "product"
-         env         = "prod"
+        env          = "prod"
        }
+
        limit = {
         max_cpu      = "0.6"
         max_memory   = "512Mi"

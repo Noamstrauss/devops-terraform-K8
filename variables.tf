@@ -19,7 +19,6 @@ variable "apps_config3" {
        loadBalancer    = string
     })
     labels = object({
-       name            = string
        tier            = string
        owner           = string
       env              = string
@@ -42,22 +41,19 @@ variable "apps_config3" {
 
 
       annotations = {
-       serviceClass    = "web-frontend"
+       serviceClass    = "web-frontend-prod"
        loadBalancer    = "external"
       }
 
       acl = {
-        ingress        = "stream-backend"
+        ingress        = "stream-backend-prod"
        egress          = "0.0.0.0/0"
        port            = "81"
-        targetport     = "80"
+       targetport      = "80"
        protocol        = "TCP"
-
-
-
       }
+
       labels = {
-        name           = "stream-frontend"
         tier           = "web"
         owner          = "product"
         env            = "prod"
@@ -72,17 +68,17 @@ variable "apps_config3" {
 
     },
     backend  = {
-      name             = "stream-backend"
+      name             = "stream-backend-prod"
        image           = "nginx"
        imagePullPolicy = "IfNotPresent"
 
       annotations = {
-       serviceClass    = "web-backend"
+       serviceClass    = "web-backend-prod"
        loadBalancer    = "internal"
       }
 
        acl = {
-        ingress        = "stream-frontend"
+       ingress         = "stream-frontend-prod"
        egress          = "10.96.0.0/12"
        port            = "81"
        targetport      = "80"
@@ -90,10 +86,9 @@ variable "apps_config3" {
 
       }
       labels = {
-        name           = "stream-backend"
         tier           = "api"
         owner          = "product"
-        env            = "dev"
+        env            = "prod"
        }
        limit = {
         max_cpu        = "0.6"
@@ -103,7 +98,7 @@ variable "apps_config3" {
        }
     },
     database  = {
-       name            = "stream-database"
+       name            = "stream-database-prod"
        image           = "mongo:4.4.12"
        imagePullPolicy = "IfNotPresent"
 
@@ -114,7 +109,7 @@ variable "apps_config3" {
       }
 
        acl = {
-        ingress        = "stream-backend"
+        ingress        = "stream-backend-prod"
        egress          = "10.96.0.0/12"
        port            = "27017"
          targetport    = "27017"
@@ -122,10 +117,9 @@ variable "apps_config3" {
 
       }
        labels = {
-        name           = "stream-database"
         tier           = "shared"
         owner          = "product"
-         env           = "dev"
+         env           = "prod"
        }
        limit = {
         max_cpu        = "0.6"

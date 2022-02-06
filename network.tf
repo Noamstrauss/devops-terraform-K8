@@ -3,6 +3,11 @@ for_each = var.apps_config3
   metadata {
     name      = format("%s-acl", each.value.name)
     namespace = each.value.name
+    labels = {
+      name = each.value.name
+      tier = each.value.labels.tier
+      env = each.value.labels.env
+    }
   }
   spec {
     policy_types = ["Ingress", "Egress"]
@@ -20,7 +25,6 @@ for_each = var.apps_config3
         }
       }
 
-
       ports {
         port     = each.value.acl.port
         protocol = each.value.acl.protocol
@@ -28,7 +32,7 @@ for_each = var.apps_config3
       ports {
         port     = each.value.acl.targetport
         protocol = each.value.acl.protocol
-        // Added targetport (80 & 27017) for the receive packet to be able to come back
+        // Added (80 & 27017) for the receive packet
       }
 
     }

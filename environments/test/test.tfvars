@@ -12,13 +12,11 @@ apps_config3 = {
       }
 
       acl = {
-        ingress      = "stream-backend-test"
+       ingress       = "stream-backend-test"
        egress        = "0.0.0.0/0"
        port          = "81"
-        targetport   = "80"
+       targetport    = "80"
        protocol      = "TCP"
-
-
 
       }
       labels = {
@@ -27,6 +25,7 @@ apps_config3 = {
         owner        = "product"
         env          = "test"
        }
+
        limit = {
         max_cpu      = "0.6"
         max_memory   = "512Mi"
@@ -34,8 +33,10 @@ apps_config3 = {
         req_memory   = "150Mi"
        }
     },
+
+
     backend  = {
-      name             = "stream-backend-test"
+       name            = "stream-backend-test"
        image           = "nginx"
        imagePullPolicy = "IfNotPresent"
 
@@ -45,7 +46,7 @@ apps_config3 = {
       }
 
        acl = {
-        ingress      = "stream-frontend-test"
+       ingress       = "stream-frontend-test"
        egress        = "10.96.0.0/12"
        port          = "81"
        targetport    = "80"
@@ -57,6 +58,7 @@ apps_config3 = {
         tier         = "api"
         owner        = "product"
         env          = "test"
+
        }
        limit = {
         max_cpu      = "0.6"
@@ -64,12 +66,13 @@ apps_config3 = {
         req_cpu      = "0.4"
         req_memory   = "150Mi"
        }
+
+
     },
     database  = {
        name            = "stream-database-test"
        image           = "mongo:4.4.12"
        imagePullPolicy = "IfNotPresent"
-
 
       annotations = {
        serviceClass = "database"
@@ -77,10 +80,10 @@ apps_config3 = {
       }
 
        acl = {
-        ingress      = "stream-backend-test"
+       ingress      = "stream-backend-test"
        egress       = "10.96.0.0/12"
        port         = "27017"
-         targetport = "27017"
+       targetport   = "27017"
        protocol     = "TCP"
 
       }
@@ -88,7 +91,8 @@ apps_config3 = {
         name         = "stream-database-test"
         tier         = "shared"
         owner        = "product"
-         env         = "dev"
+         env         = "test"
+
        }
        limit = {
         max_cpu      = "0.6"

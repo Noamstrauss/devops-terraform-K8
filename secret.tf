@@ -3,6 +3,11 @@ resource "kubernetes_secret" "secret" {
   metadata {
     name = "db-secret"
     namespace = each.value.name
+    labels = {
+      name = each.value.name
+      tier = each.value.labels.tier
+      env = each.value.labels.env
+    }
   }
 
   data = {

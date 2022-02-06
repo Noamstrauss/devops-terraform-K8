@@ -1,23 +1,23 @@
-###Devops Assignment Q&A
+### Devops Assignment Q&A
 - by Noam Strauss
 
 
 ----
-###1.reduce variable count
+### 1.reduce variable count
 
 - Creating one variable file that has fewer variables to manage.
 <p style='color:yellow'>Answer: I have created one variable named "apps_config3" to configure the 3 tier app values.</p>
 
 
 ----
-###2. remove duplicate code
+### 2. remove duplicate code
 - To iterate over a list when provisioning resources
  ( https://learn.hashicorp.com/tutorials/terraform/for-each )
 <p style='color:yellow'>Answer: I used for-each loop to provision the 3 apps.</p>
 
 
 ----
-###3.change network acl
+### 3.change network acl
 - To change the port in the ingress in frontend -> acl -> port in variables.tf to the new port (81)
 - To Create A Service for each app
 - Because i use minikube i had to use "calico" plugin for network policy to work
