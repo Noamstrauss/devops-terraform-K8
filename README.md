@@ -60,7 +60,7 @@ the frontend -> acl -> port in variables.tf to 81.<br>
 ### 7. add environment variable to service
 - To Create a Secret Resource and attach to the container
 (https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret)
-- <p style='color:yellow'>Answer: Created a Secret resource and attach to the during deployment to the container.</p>
+- <p style='color:yellow'>Answer: Created a Secret resource and attached it during deployment to the container.</p>
 ![img_1.png](img_1.png)
 ------------------------------------
 
