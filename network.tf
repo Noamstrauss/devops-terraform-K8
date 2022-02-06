@@ -4,7 +4,6 @@ for_each = var.apps_config3
     name      = format("%s-acl", each.value.name)
     namespace = each.value.name
     labels = {
-      name = each.value.name
       tier = each.value.labels.tier
       env = each.value.labels.env
     }
@@ -24,7 +23,6 @@ for_each = var.apps_config3
           }
         }
       }
-
       ports {
         port     = each.value.acl.port
         protocol = each.value.acl.protocol
@@ -34,7 +32,6 @@ for_each = var.apps_config3
         protocol = each.value.acl.protocol
         // Added (80 & 27017) for the receive packet
       }
-
     }
     egress {
       to {

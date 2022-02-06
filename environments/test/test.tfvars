@@ -47,7 +47,7 @@ apps_config3 = {
 
        acl = {
        ingress       = "stream-frontend-test"
-       egress        = "10.96.0.0/12"
+       egress        = "10.96.0.0/8"
        port          = "81"
        targetport    = "80"
        protocol      = "TCP"
@@ -81,7 +81,7 @@ apps_config3 = {
 
        acl = {
        ingress      = "stream-backend-test"
-       egress       = "10.96.0.0/12"
+       egress       = "10.96.0.0/8"
        port         = "27017"
        targetport   = "27017"
        protocol     = "TCP"
