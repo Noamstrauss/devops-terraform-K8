@@ -27,10 +27,10 @@ apps_config3 = {
        }
 
        limit = {
-        max_cpu      = "0.6"
-        max_memory   = "512Mi"
-        req_cpu      = "0.4"
-        req_memory   = "150Mi"
+        max_cpu      = "250m"
+        max_memory   = "128Mi"
+        req_cpu      = "32m"
+        req_memory   = "64Mi"
        }
     },
 
@@ -61,10 +61,10 @@ apps_config3 = {
 
        }
        limit = {
-        max_cpu      = "0.6"
-        max_memory   = "512Mi"
-        req_cpu      = "0.4"
-        req_memory   = "150Mi"
+        max_cpu      = "250m"
+        max_memory   = "128Mi"
+        req_cpu      = "150m"
+        req_memory   = "64Mi"
        }
 
 
@@ -95,10 +95,10 @@ apps_config3 = {
 
        }
        limit = {
-        max_cpu      = "0.6"
-        max_memory   = "512Mi"
-        req_cpu      = "0.4"
-        req_memory   = "150Mi"
+        max_cpu      = "250m"
+        max_memory   = "128Mi"
+        req_cpu      = "150m"
+        req_memory   = "64Mi"
        }
   }
 }

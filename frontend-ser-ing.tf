@@ -14,9 +14,9 @@ resource "kubernetes_service_v1" "frontend" {
       name = var.apps_config3.frontend.name
     }
     port {
-      port = 80
-      target_port = 80
-      protocol = "TCP"
+      port = var.apps_config3.frontend.acl.port
+      target_port = var.apps_config3.frontend.acl.targetport
+      protocol = var.apps_config3.frontend.acl.protocol
     }
     type = "NodePort"
   }
@@ -27,7 +27,7 @@ resource "kubernetes_service_v1" "frontend" {
 resource "kubernetes_ingress_v1" "frontend" {
   wait_for_load_balancer = true
   metadata {
-    name = format("%s-ingress", var.apps_config3.frontend.name)
+    name = "frontend-ingress"
     namespace = var.apps_config3.frontend.name
     labels = {
       loadBalancer = var.apps_config3.frontend.annotations.loadBalancer
