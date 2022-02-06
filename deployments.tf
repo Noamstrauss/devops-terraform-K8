@@ -1,106 +1,58 @@
-#############################################################################
-### Deployment manifests for 3 applications (frontend, backend, database) ###
-### feel free to change anything and to implement any function or method  ###
-#############################################################################
-
-resource "kubernetes_deployment" "app1" {
+resource "kubernetes_deployment" "deployment"  {
+     for_each = var.apps_config3
   metadata {
-    name      = var.app1_name
-    namespace = var.app1_name
+    name = each.value.name
+    namespace = each.value.name
     labels = {
-      name = var.app1_labels.name
-      tier = var.app1_labels.tier
+      name = each.value.name
+      tier = each.value.labels.tier
     }
   }
   spec {
     selector {
       match_labels = {
-        name = var.app1_labels.name
-        tier = var.app1_labels.tier
+        name = each.value.name
+        tier = each.value.labels.tier
       }
     }
     template {
       metadata {
-        name = var.app1_name
+        name = each.value.name
         labels = {
-          name = var.app1_labels.name
-          tier = var.app1_labels.tier
+          name = each.value.name
+          tier = each.value.labels.tier
         }
       }
       spec {
         container {
-          name  = var.app1_name
-          image = "nginx"
-        }
-      }
-    }
-  }
-}
+          name  = each.value.name
+          image = each.value.image
+          image_pull_policy = each.value.imagePullPolicy
+          env {
+            name = "DB_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = "db-secret"
+                key = "password"
+              }
+            }
+          }
+        resources {
+          limits = {
+            memory = each.value.limit.max_memory
+            cpu = each.value.limit.max_cpu
+                   }
+          requests = {
+            memory = each.value.limit.req_memory
+            cpu = each.value.limit.req_cpu
+          }
+       }
 
-resource "kubernetes_deployment" "app2" {
-  metadata {
-    name      = var.app2_name
-    namespace = var.app2_name
-    labels = {
-      name = var.app2_labels.name
-      tier = var.app2_labels.tier
-    }
-  }
-  spec {
-    selector {
-      match_labels = {
-        name = var.app2_labels.name
-        tier = var.app2_labels.tier
-      }
-    }
-    template {
-      metadata {
-        name = var.app2_name
-        labels = {
-          name = var.app2_labels.name
-          tier = var.app2_labels.tier
         }
-      }
-      spec {
-        container {
-          name  = var.app2_name
-          image = "nginx"
-        }
-      }
-    }
-  }
-}
 
-resource "kubernetes_deployment" "app3" {
-  metadata {
-    name      = var.app3_name
-    namespace = var.app3_name
-    labels = {
-      name = var.app3_labels.name
-      tier = var.app3_labels.tier
-    }
-  }
-  spec {
-    selector {
-      match_labels = {
-        name = var.app3_labels.name
-        tier = var.app3_labels.tier
       }
-    }
-    template {
-      metadata {
-        name = var.app3_name
-        labels = {
-          name = var.app3_labels.name
-          tier = var.app3_labels.tier
-        }
-      }
-      spec {
-        container {
-          name  = var.app3_name
-          image = "mongo"
-        }
+
       }
     }
   }
-}
+

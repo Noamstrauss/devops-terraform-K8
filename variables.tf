@@ -1,135 +1,136 @@
-### namespace variables for app1
+variable "apps_config3" {
+  description = "Configuration for apps & database"
+  type        = map(object({
+       name            = string
+       image           = string
+       imagePullPolicy = string
 
-variable "app1_name" {
-  type        = string
-  description = "exposed app name"
-  default     = "stream-frontend"
-}
+     acl = object({
+       targetport      = string
+       ingress         = string
+       egress          = string
+       port            = string
+       protocol        = string
+       targetport      = string
+    })
 
-variable "app1_labels" {
-  type        = map(string)
-  description = "labels for namespace app1"
-  default = {
-    "name"  = "stream-frontend"
-    "tier"  = "web"
-    "owner" = "product"
-  }
-}
+    annotations = object({
+       serviceClass    = string
+       loadBalancer    = string
+    })
+    labels = object({
+       tier            = string
+       owner           = string
+      env              = string
+    })
+    limit = object({
+       max_cpu         = string
+       max_memory      = string
+       req_cpu         = string
+       req_memory      = string
+    })
 
-variable "app1_annotations" {
-  type        = map(string)
-  description = "annotations for namespace app1"
-  default = {
-    "serviceClass"       = "web-frontend"
-    "loadBalancer/class" = "external"
-  }
-}
-
-### namespace variables for app2
-
-variable "app2_name" {
-  type        = string
-  description = "exposed app name"
-  default     = "stream-backend"
-}
-
-variable "app2_labels" {
-  type        = map(string)
-  description = "labels for namespace app2"
-  default = {
-    "name"  = "stream-backend"
-    "tier"  = "api"
-    "owner" = "product"
-  }
-}
-
-variable "app2_annotations" {
-  type        = map(string)
-  description = "annotations for namespace app2"
-  default = {
-    "serviceClass"       = "web-backend"
-    "loadBalancer/class" = "internal"
-  }
-}
-
-### namespace variables for app3
-
-variable "app3_name" {
-  type        = string
-  description = "exposed app name"
-  default     = "stream-database"
-}
-
-variable "app3_labels" {
-  type        = map(string)
-  description = "labels for namespace app3"
-  default = {
-    "name"  = "stream-database"
-    "tier"  = "shared"
-    "owner" = "product"
-  }
-}
-
-variable "app3_annotations" {
-  type        = map(string)
-  description = "annotations for namespace app3"
-  default = {
-    "serviceClass"       = "database"
-    "loadBalancer/class" = "disabled"
-  }
-}
-
-variable "acl_frontend" {
-  description = "access allowed from this source"
-  type = map(object({
-    ingress  = string
-    egress   = string
-    port     = string
-    protocol = string
   }))
+
   default = {
     frontend = {
-      ingress  = "stream-backend"
-      egress   = "0.0.0.0/0"
-      port     = "80"
-      protocol = "TCP"
-    }
+       name            = "stream-frontend-prod"
+       image           = "nginx"
+       imagePullPolicy = "IfNotPresent"
+
+
+
+      annotations = {
+       serviceClass    = "web-frontend-prod"
+       loadBalancer    = "external"
+      }
+
+      acl = {
+        ingress        = "stream-backend-prod"
+       egress          = "0.0.0.0/0"
+       port            = "81"
+       targetport      = "80"
+       protocol        = "TCP"
+      }
+
+      labels = {
+        tier           = "web"
+        owner          = "product"
+        env            = "prod"
+       }
+
+       limit = {
+        max_cpu        = "0.6"
+        max_memory     = "512Mi"
+        req_cpu        = "0.4"
+        req_memory     = "150Mi"
+       }
+
+    },
+    backend  = {
+      name             = "stream-backend-prod"
+       image           = "nginx"
+       imagePullPolicy = "IfNotPresent"
+
+      annotations = {
+       serviceClass    = "web-backend-prod"
+       loadBalancer    = "internal"
+      }
+
+       acl = {
+       ingress         = "stream-frontend-prod"
+       egress          = "10.96.0.0/12"
+       port            = "81"
+       targetport      = "80"
+       protocol        = "TCP"
+
+      }
+      labels = {
+        tier           = "api"
+        owner          = "product"
+        env            = "prod"
+       }
+       limit = {
+        max_cpu        = "0.6"
+        max_memory     = "512Mi"
+        req_cpu        = "0.4"
+        req_memory     = "150Mi"
+       }
+    },
+    database  = {
+       name            = "stream-database-prod"
+       image           = "mongo:4.4.12"
+       imagePullPolicy = "IfNotPresent"
+
+
+      annotations = {
+       serviceClass    = "database"
+       loadBalancer    = "disabled"
+      }
+
+       acl = {
+        ingress        = "stream-backend-prod"
+       egress          = "10.96.0.0/12"
+       port            = "27017"
+         targetport    = "27017"
+       protocol        = "TCP"
+
+      }
+       labels = {
+        tier           = "shared"
+        owner          = "product"
+         env           = "prod"
+       }
+       limit = {
+        max_cpu        = "0.6"
+        max_memory     = "512Mi"
+        req_cpu        = "0.4"
+        req_memory     = "150Mi"
+       }
   }
 }
 
-variable "acl_backend" {
-  description = "access allowed from this source"
-  type = map(object({
-    ingress = string
-    egress  = string
-    port     = string
-    protocol = string
-  }))
-  default = {
-    backend = {
-      ingress  = "stream-frontend"
-      egress   = "172.17.0.0/24"
-      port     = "80"
-      protocol = "TCP"
-
-    }
-  }
 }
 
-variable "acl_database" {
-  description = "access allowed from this source"
-  type = map(object({
-    ingress = string
-    egress  = string
-    port     = string
-    protocol = string
-  }))
-  default = {
-    database = {
-      ingress  = "stream-backend"
-      egress   = "172.17.0.0/24"
-      port     = "27017"
-      protocol = "TCP"
-    }
-  }
-}
+
+
