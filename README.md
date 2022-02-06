@@ -38,16 +38,16 @@ the frontend -> acl -> port in variables.tf to 81.<br>
 - Add cpu/memory limit to the container brackets
 - Alternative: To use a LimitRange object
 
- <p style='color:yellow'>Answer: I Added cpu/memory limit to the container brackets in deployments.tf.</p>
+ <p style='color:yellow'>Answer: Added cpu/memory limit to the container brackets in deployments.tf.</p>
 
 
 ----
 ### 5.make scaling possible
 - We need to enable/provision metric server  (See Notes)
 - Configure HorizontalPodAutoscaler (HPA) 
-- You can alternatively use the command bellow >
+- You can alternatively use the kubectl to provision with the command bellow >
 `kubectl autoscale --namespace="<namespacehere>" deployment <deploymenthere> --cpu-percent=70 --min=2 --max=4`
- <p style='color:yellow'>Answer: I Used The Command Above To Provision HPA</p>
+ <p style='color:yellow'>Answer: Provisioned HPA to Auto scale pods.</p>
 
 ----
 ### 6. prepare for multi-environment
@@ -60,7 +60,7 @@ the frontend -> acl -> port in variables.tf to 81.<br>
 ### 7. add environment variable to service
 - To Create a Secret Resource and attach to the container
 (https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret)
-- <p style='color:yellow'>Answer: To Create a Secret resource and attach to the during deployment to the container.</p>
+- <p style='color:yellow'>Answer: Created a Secret resource and attach to the during deployment to the container.</p>
 ![img_1.png](img_1.png)
 ------------------------------------
 
