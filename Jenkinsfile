@@ -37,7 +37,7 @@ def emailSubject = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER}"
             when { anyOf {branch "dev"} }
             steps {
                 sh '''
-                terraform apply -auto-approve -var-file=environments/dev/dev.tfvars
+                terraform apply -auto-approve -var-file=environments/test/test.tfvars
                 '''
 
             }
