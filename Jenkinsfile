@@ -33,6 +33,28 @@ def emailSubject = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER}"
             }
         }
 
+        age('Terraform Apply - dev'){
+            when { anyOf {branch "dev"} }
+            steps {
+                sh '''
+                terraform apply -auto-approve -var-file=environments/dev/dev.tfvars
+                '''
+
+            }
+        }
+
+        stage('Terraform Apply - prod'){
+            when { anyOf {branch "master"}; }
+            input {
+                message "Do you want to proceed for infrastructure provisioning?"
+            }
+            steps {
+                sh '''
+                terraform apply -auto-approve -var-file=environments/prod/prod.tfvars
+                '''
+            }
+        }
+
 
   }
 }
