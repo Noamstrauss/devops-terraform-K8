@@ -13,8 +13,7 @@ def emailSubject = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER}"
         stage('kubectl test') {
             steps {
 
-            kubectl get nodes
-
+            sh "kubectl get nodes"
             }
         }
 
