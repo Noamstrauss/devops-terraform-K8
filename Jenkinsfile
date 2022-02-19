@@ -10,6 +10,14 @@ def emailSubject = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER}"
 }
 
   stages {
+        stage('kubectl test') {
+            steps {
+                sh '''
+            kubectl get nodes
+                   '''
+            }
+        }
+
         stage('init') {
             steps {
                 sh '''
