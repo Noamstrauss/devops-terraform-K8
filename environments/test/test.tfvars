@@ -4,8 +4,6 @@ apps_config3 = {
        image        = "nginx"
        imagePullPolicy = "IfNotPresent"
 
-
-
       annotations = {
        serviceClass = "web-frontend-test"
        loadBalancer = "external"
@@ -20,21 +18,20 @@ apps_config3 = {
 
       }
       labels = {
-        name         = "stream-frontend-test"
         tier         = "web"
         owner        = "product"
         env          = "test"
        }
 
        limit = {
-        max_cpu      = "250m"
-        max_memory   = "128Mi"
-        req_cpu      = "32m"
-        req_memory   = "64Mi"
+        max_cpu      = "0.6"
+        max_memory   = "512Mi"
+        req_cpu      = "0.4"
+        req_memory   = "150Mi"
        }
+
+
     },
-
-
     backend  = {
        name            = "stream-backend-test"
        image           = "nginx"
@@ -54,17 +51,16 @@ apps_config3 = {
 
       }
       labels = {
-        name         = "stream-backend-test"
         tier         = "api"
         owner        = "product"
         env          = "test"
-
        }
+
        limit = {
-        max_cpu      = "250m"
-        max_memory   = "128Mi"
-        req_cpu      = "150m"
-        req_memory   = "64Mi"
+        max_cpu      = "0.6"
+        max_memory   = "512Mi"
+        req_cpu      = "0.4"
+        req_memory   = "150Mi"
        }
 
 
@@ -73,6 +69,7 @@ apps_config3 = {
        name            = "stream-database-test"
        image           = "mongo:4.4.12"
        imagePullPolicy = "IfNotPresent"
+
 
       annotations = {
        serviceClass = "database"
@@ -88,17 +85,16 @@ apps_config3 = {
 
       }
        labels = {
-        name         = "stream-database-test"
         tier         = "shared"
         owner        = "product"
-         env         = "test"
-
+        env          = "test"
        }
+
        limit = {
-        max_cpu      = "250m"
-        max_memory   = "128Mi"
-        req_cpu      = "150m"
-        req_memory   = "64Mi"
+        max_cpu      = "0.6"
+        max_memory   = "512Mi"
+        req_cpu      = "0.4"
+        req_memory   = "150Mi"
        }
   }
 }
